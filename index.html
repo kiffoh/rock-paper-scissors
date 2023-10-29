@@ -9,6 +9,8 @@
 
     <p>The timeless game has been brought to a screen near you!</p>
     <p>Can you use your real life skills to beat something which lives in thin air?</p>
+    <p>Best of 5!</p>
+
 
     <div class="form">
         <label for="guessField">Enter a guess: </label>
@@ -20,6 +22,7 @@
         <p class="Statement"></p>
         <p class="Guesses"></p>
         <p class="lastResult"></p>
+        <p class="score"></p>
     </div>
 
     <script>
@@ -34,6 +37,17 @@
             return choice[Math.floor(Math.random() * 3)];
         }
 
+        let userScore = 0;
+        let computerScore = 0;
+
+        function updateScore(result) {
+            if (result == "User") {
+                userScore++;
+            } else if (result == "Computer") {
+                computerScore++;
+            }
+        }
+
         function checkGuess() {
             const userGuess = guessField.value;
             const computerChoice = getComputerChoice();
@@ -43,14 +57,51 @@
 
             if (userGuess === computerChoice) {
                 lastResult.textContent = "Draw! You know we're playing \"Rock, Paper, Scissors \" and not snap?";
+
             } else if ((userGuess === "rock" && computerChoice === "scissor") || (userGuess === "paper" && computerChoice === "rock") || (userGuess === "scissor" && computerChoice === "paper")) {
                 lastResult.textContent = "Congratulations, You win! The modern computer submits to the might of your intellect.";
+                updateScore("User")
             } else {
                 lastResult.textContent = "Unluckly, you lost! You let this magicscreen beat you?";
+                updateScore("Computer")
+            }
+
+            document.querySelector(".score").textContent = `User: ${userScore} vs Computer: ${computerScore}`;
+
+            if ((userScore + computerScore) >= 5 || (userScore === 3) || (computerScore === 3)) {
+                endOfGame()
             }
         }
 
         guessSubmit.addEventListener("click", checkGuess);
+
+        function endOfGame() {
+            guessField.disabled = true;
+            guessSubmit.disabled = true;
+            resetButton = document.createElement('button');
+            resetButton.textContent = 'Start new game';
+            document.body.appendChild(resetButton);
+            resetButton.addEventListener('click', resetGame);
+        }
+
+        function resetGame() {
+            const resetParas = document.querySelectorAll('.resultParas p');
+            
+            for (const resetPara of resetParas) {
+                resetPara.textContent = '';
+            }
+            resetButton.parentNode.removeChild(resetButton);
+
+            userScore = 0;
+            computerScore = 0;
+
+            guessField.disabled = false;
+            guessSubmit.disabled = false;
+            guessField.value = '';
+            guessField.focus();
+
+            lastResult.style.backgroundColor = 'white';
+    }
     </script>
 </body>
 </html>
