@@ -5,21 +5,52 @@
     <title>Online Rock, Paper, Scissors game!</title>
 </head>
 <body>
-    <h1></h1>
-    
+    <h1>Rock, Paper, Scissors</h1>
+
+    <p>The timeless game has been brought to a screen near you!</p>
+    <p>Can you use your real life skills to beat something which lives in thin air?</p>
+
+    <div class="form">
+        <label for="guessField">Enter a guess: </label>
+        <input type="text" id="guessField" class="guessField">
+        <input type="submit" value="Submit guess" class="guessSubmit">  
+    </div>
+
+    <div class="resultParas">
+        <p class="Statement"></p>
+        <p class="Guesses"></p>
+        <p class="lastResult"></p>
+    </div>
+
+    <script>
+        const choice = ["rock", "paper", "scissor"];
+        const guessField = document.querySelector(".guessField");
+        const lastResult = document.querySelector(".lastResult");
+        const guessSubmit = document.querySelector(".guessSubmit");
+        const Guesses = document.querySelector(".Guesses");
+        const Statement = document.querySelector(".Statement");
+
+        function getComputerChoice() {
+            return choice[Math.floor(Math.random() * 3)];
+        }
+
+        function checkGuess() {
+            const userGuess = guessField.value;
+            const computerChoice = getComputerChoice();
+
+            Statement.textContent = "The match of the century, the one to end it all, the ultimate ultimatium, the final reckoning has commenced! Both fighters have locked in:"
+            Guesses.textContent = `Your ${userGuess} vs Computer's ${computerChoice}`
+
+            if (userGuess === computerChoice) {
+                lastResult.textContent = "Draw! You know we're playing \"Rock, Paper, Scissors \" and not snap?";
+            } else if ((userGuess === "rock" && computerChoice === "scissor") || (userGuess === "paper" && computerChoice === "rock") || (userGuess === "scissor" && computerChoice === "paper")) {
+                lastResult.textContent = "Congratulations, You win! The modern computer submits to the might of your intellect.";
+            } else {
+                lastResult.textContent = "Unluckly, you lost! You let this magicscreen beat you?";
+            }
+        }
+
+        guessSubmit.addEventListener("click", checkGuess);
+    </script>
 </body>
-
-<script>
-    const choice = ["rock", "paper", "scissor"]
-    function getComputerChoice() {
-        return choice[Math.floor( Math.random() * 3)]
-    }
-
-    console.log(getComputerChoice())
-    console.log(getComputerChoice())
-    console.log(getComputerChoice())
-    console.log(getComputerChoice())
-    console.log(getComputerChoice())
-    console.log(getComputerChoice())
-</script>
 </html>
