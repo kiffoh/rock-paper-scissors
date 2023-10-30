@@ -14,8 +14,9 @@
 
     <div class="form">
         <label for="guessField">Enter a guess: </label>
-        <input type="text" id="guessField" class="guessField">
-        <input type="submit" value="Submit guess" class="guessSubmit">  
+        <input type="button" value="rock" class="guessRock">
+        <input type="button" value="paper" class="guessPaper">
+        <input type="button" value="scissor" class="guessScissor">
     </div>
 
     <div class="resultParas">
@@ -29,9 +30,23 @@
         const choice = ["rock", "paper", "scissor"];
         const guessField = document.querySelector(".guessField");
         const lastResult = document.querySelector(".lastResult");
-        const guessSubmit = document.querySelector(".guessSubmit");
+        const guessRock = document.querySelector(".guessRock");
+        const guessPaper = document.querySelector(".guessPaper");
+        const guessScissor = document.querySelector(".guessScissor");
         const Guesses = document.querySelector(".Guesses");
         const Statement = document.querySelector(".Statement");
+
+        guessRock.addEventListener("click", function() {
+            checkGuess("rock");
+        });
+
+        guessPaper.addEventListener("click", function() {
+            checkGuess("paper");
+        });
+
+        guessScissor.addEventListener("click", function() {
+            checkGuess("scissor");
+        });
 
         function getComputerChoice() {
             return choice[Math.floor(Math.random() * 3)];
@@ -48,8 +63,8 @@
             }
         }
 
-        function checkGuess() {
-            const userGuess = guessField.value;
+        function checkGuess(userGuess) {
+            /* const userGuess = guessField.value; */
             const computerChoice = getComputerChoice();
 
             Statement.textContent = "The match of the century, the one to end it all, the ultimate ultimatium, the final reckoning has commenced! Both fighters have locked in:"
